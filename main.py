@@ -69,8 +69,9 @@ def generate_grid(group_size):
             if neighbor.color in dummy_color_list:
                 dummy_color_list.remove(neighbor.color)
         curr_cell.color = random.choice(dummy_color_list)
-        while curr_cell.group.get_length() < 9:
-            curr_cell = curr_cell.spread(grid)
+        curr_cell.spread_alt(grid)
+        # while curr_cell.group.get_length() < 9:
+        #     curr_cell = curr_cell.spread(grid)
 
 
 
@@ -103,16 +104,13 @@ def save_grid(grid):
     f.close()
 
 def main():
-    i = 0
-
-    while i < 26:
-        for j in range(100):
+    for j in range(1, 60):
+        for i in range(100):
             try:
-                grid = generate_grid(i)
+                grid = generate_grid(j)
                 save_grid(grid)
-                print("Group size: " + str(i))
-                i += 1
-                time.sleep(0.5)
+                print(j)
+                break
             except:
                 pass
 

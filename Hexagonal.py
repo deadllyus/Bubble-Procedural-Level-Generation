@@ -71,6 +71,18 @@ class HexCell:
             bottom_right = grid[self.y + 1][self.x]
         return bottom_right
 
+    def spread_alt(self, grid):
+        neighbors = self.get_neighbors(grid)
+        for neighbor in neighbors:
+            if self.group.get_length() >= 9:
+                return
+            if neighbor.color == 0 and neighbor.is_connected_to_center:
+                neighbor.color = self.color
+                neighbor.group = self.group
+                self.group.add_cell(neighbor)
+        for i in range(9 - self.group.length - 1):
+            self.spread(grid)
+
     def get_neighbors(self, grid):
         return [self.get_right(grid), self.get_top_right(grid), self.get_top_left(grid),
                 self.get_left(grid), self.get_bottom_left(grid), self.get_bottom_right(grid)]
